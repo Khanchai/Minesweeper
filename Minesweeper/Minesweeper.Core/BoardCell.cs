@@ -33,6 +33,13 @@ namespace Minesweeper.Core
         public void Touch(int x, int y)
         {
             GetCell(x, y).IsOpened = true;
+
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                {
+                    GetCell(i, j).IsOpened = true;
+                }
+
             if (GetCell(x, y).IsBomb)
             {
                 GameState = GameState.GameOver;

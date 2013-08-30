@@ -25,7 +25,6 @@ namespace Minesweeper.Core.Tests
             var board = new Board(10, 10);
             board.Touch(1, 1);
 
-            Assert.That(board.GetCell(0, 0).IsOpened, Is.False);
             Assert.That(board.GetCell(1, 1).IsOpened, Is.True);
         }
 
@@ -110,6 +109,40 @@ namespace Minesweeper.Core.Tests
 
             board.Touch(1, 2);
             Assert.That(board.GameState, Is.Not.EqualTo(GameState.GameOver));
+        }
+
+        [Test]
+        public void WhenTouchZero_TheresNoBombs()
+        {
+            var board = new Board(3, 3);
+            
+            board.Touch(0, 0);
+            for(int x = 0; x < 3; ++x)
+                for(int y = 0; y < 3; ++y)
+            {
+                Assert.That(board.GetCell(x, y).IsOpened, Is.True);
+            }
+        }
+
+        [Test]
+        public void WhenTouchZero_TheresOneBombs()
+        {
+            var board = new Board(3, 3);
+            board.SetBomb(2, 2);
+            board.Touch(0, 0);
+
+            for (int x = 0; x < 3; ++x)
+                for (int y = 0; y < 3; ++y)
+                {
+                    if (x == 2 && y == 2)
+                    {
+                        Assert.That(board.GetCell(x, y).IsOpened, Is.False);
+                    }
+                    else
+                    {
+                        Assert.That(board.GetCell(x, y).IsOpened, Is.True);
+                    }
+                }
         }
     }
 }
