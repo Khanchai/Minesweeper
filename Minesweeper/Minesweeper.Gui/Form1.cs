@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace Minesweeper.Gui
 {
-    public partial class Form1 : Form
+    public partial class MineSweeper : Form
     {
-        public Form1()
+        public MineSweeper()
         {
-            InitializeComponent();
+            
+
         }
     }
 }
