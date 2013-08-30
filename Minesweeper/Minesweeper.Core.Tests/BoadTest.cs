@@ -35,7 +35,7 @@ namespace Minesweeper.Core.Tests
             var board = new Board(10, 10);
             board.SetBomb(0, 0);
             board.SetBomb(2, 0);
-
+            
             Assert.That(board.GetCountOfAroundBombs(1, 1), Is.EqualTo(2));
         }
 
@@ -70,6 +70,16 @@ namespace Minesweeper.Core.Tests
             board.SetBomb(1, 1);
 
             Assert.That(board.GetCountOfAroundBombs(1, 1), Is.EqualTo(8));
+        }
+
+        [Test]
+        public void TestGetCoutOfAroundBombs4()
+        {
+            var board = new Board(10, 10);
+            board.SetBomb(1, 0);
+            board.SetBomb(0, 1);
+
+            Assert.That(board.GetCountOfAroundBombs(0, 0), Is.EqualTo(2));
         }
     }
 }
