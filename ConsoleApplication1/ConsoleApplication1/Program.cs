@@ -8,20 +8,28 @@ namespace ConsoleApplication1
 {
     class Person
     {
-        private int age;
-
-        // property
         public int Age
         {
-            get { return age; }
-            set { age = value; }
+            get;
+            set;
         }
     }
 
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            Person p1 = new Person() {Age = 22};
+
+            Person p2 = p1;
+
+            p1.Age = 10;
+
+            Console.WriteLine(p2.Age);
+
+
+            Person[] ar = new Person[3] { new Person(), new Person(), new Person() };
+            var age = ar[0].Age;
         }
     }
 }
