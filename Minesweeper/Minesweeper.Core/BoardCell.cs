@@ -43,52 +43,17 @@ namespace Minesweeper.Core
             GetCell(x, y).IsBomb = true;
         }
 
-        public int GetCountOfAroundBombs(int x, int y)// x1,y1
+        public int GetCountOfAroundBombs(int x, int y)
         {
             var countBomb = 0;
-            //  is Cell(x - 1, y -1) bomb
-            var isBomb1 = GetCell(x - 1, y - 1).IsBomb;
-            var isBomb2 = GetCell(x, y - 1).IsBomb;
-            var isBomb3 = GetCell(x + 1, y - 1).IsBomb;
-            var isBomb4 = GetCell(x + 1, y).IsBomb;
-            var isBomb5 = GetCell(x + 1, y + 1).IsBomb;
-            var isBomb6 = GetCell(x, y + 1).IsBomb;
-            var isBomb7 = GetCell(x - 1, y + 1).IsBomb;
-            var isBomb8 = GetCell(x - 1, y).IsBomb;
-
-            if (isBomb1)
-            {
-                countBomb++;
-            }
-            if (isBomb2)
-            {
-                countBomb++;
-            }
-            if (isBomb3)
-            {
-                countBomb++;
-            }
-            if (isBomb4)
-            {
-                countBomb++;
-            }
-            if (isBomb5)
-            {
-                countBomb++;
-            }
-            if (isBomb6)
-            {
-                countBomb++;
-            }
-            if (isBomb7)
-            {
-                countBomb++;
-            }
-            if (isBomb8)
-            {
-                countBomb++;
-            }
-
+            for (int i = 0; i <= x+1; i++)
+                for (int j = 0; j <= y + 1; j++)
+                {
+                    if (GetCell(i, j).IsBomb && !(i == x && j == y))
+                    {
+                        countBomb++;
+                    }
+                }
             return countBomb;
         }
     }
