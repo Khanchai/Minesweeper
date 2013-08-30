@@ -81,5 +81,35 @@ namespace Minesweeper.Core.Tests
 
             Assert.That(board.GetCountOfAroundBombs(0, 0), Is.EqualTo(2));
         }
+
+        [Test]
+        public void WhenTouchBomb_GameOver()
+        {
+            var board = new Board(10, 10);
+            board.SetBomb(0, 0);
+
+            board.Touch(0, 0);
+            Assert.That(board.GameState, Is.EqualTo(GameState.GameOver)); 
+        }
+
+        [Test]
+        public void WhenTouchBomb_GameOver2()
+        {
+            var board = new Board(10, 10);
+            board.SetBomb(1, 1);
+
+            board.Touch(1, 1);
+            Assert.That(board.GameState, Is.EqualTo(GameState.GameOver));
+        }
+
+        [Test]
+        public void WhenTouchBomb_GameOver3()
+        {
+            var board = new Board(10, 10);
+            board.SetBomb(1, 1);
+
+            board.Touch(1, 2);
+            Assert.That(board.GameState, Is.Not.EqualTo(GameState.GameOver));
+        }
     }
 }

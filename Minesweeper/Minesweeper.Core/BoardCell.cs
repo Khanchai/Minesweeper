@@ -12,11 +12,15 @@ namespace Minesweeper.Core
 {
     public class Board // can has fields, ctor, methods, properties, types, delegate
     {
-        public Cell[,] cells;
+        Cell[,] cells;
+
+        public GameState GameState { get; private set; }
 
         // ctor
         public Board(int width, int height)
         {
+            GameState = GameState.Continue;
+
             cells = new Cell[width, height];
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -29,6 +33,14 @@ namespace Minesweeper.Core
         public void Touch(int x, int y)
         {
             GetCell(x, y).IsOpened = true;
+            if (GetCell(x, y).IsBomb)
+            {
+                GameState = GameState.GameOver;
+            }
+            else
+            {
+                GameState = GameState.Continue;
+            }
         }
 
         // method
@@ -46,7 +58,7 @@ namespace Minesweeper.Core
         public int GetCountOfAroundBombs(int x, int y)
         {
             var countBomb = 0;
-            for (int i = 0; i <= x+1; i++)
+            for (int i = 0; i <= x + 1; i++)
                 for (int j = 0; j <= y + 1; j++)
                 {
                     if (GetCell(i, j).IsBomb && !(i == x && j == y))
@@ -57,6 +69,8 @@ namespace Minesweeper.Core
             return countBomb;
         }
     }
+
+    public enum GameState { GameOver, Continue }
 
     public class Cell
     {
