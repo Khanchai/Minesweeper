@@ -15,40 +15,80 @@ namespace Minesweeper.Core
         Cell[,] cells;
 
         public GameState GameState { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
         // ctor
         public Board(int width, int height)
         {
+            Width = width;
+            Height = height;
+
             GameState = GameState.Continue;
 
             cells = new Cell[width, height];
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                 {
-                    cells[i, j] = new Cell();
+                    cells[i, j] = new Cell() { X = i, Y = j };
                 }
+        }
+
+        public void TouchAroundSafetyCells(int x, int y)
+        {
+            GetCell(x, y).IsOpened = true;
+            GetCell(x, y).IsCheck = true;
+
+            var getAroundCells = GetAroundCells(x, y);
+
+            foreach (var aroundCell in getAroundCells)
+            {
+                if (!aroundCell.IsBomb)
+                {
+                    aroundCell.IsOpened = true;
+                }
+                
+                if (GetCountOfAroundBombs(aroundCell.X, aroundCell.Y) == 0)
+                {
+                    if (!aroundCell.IsCheck)
+                    {
+                        TouchAroundSafetyCells(aroundCell.X, aroundCell.Y);
+                    }
+                }
+            }
+            
+        }
+
+        public Cell[] GetAroundCells(int x, int y)
+        {
+            var listCell = new List<Cell>();
+            for (int i = x - 1; i < x + 2; i++)
+            {
+                for (int j = y - 1; j < y + 2; j++)
+                {
+                    if (i != x || j != y)
+                    {
+                        if (IsValidCell(i,j))
+                        {
+                            listCell.Add(GetCell(i, j));
+                        }
+                    }
+                }
+            }
+            return listCell.ToArray();
+        }
+
+        private bool IsValidCell(int x, int y)
+        {
+            return (x >= 0 && x < Width) && (y >= 0 && y < Height);
         }
 
         // method
         public void Touch(int x, int y)
         {
-            //GetCell(x, y).IsOpened = true;
-
-            for (int i = 0; i <= x + 2; i++)
-                for (int j = 0; j <= x + 2; j++)
-                {
-                    if (GetCell(i, j).IsBomb && !(i == x && j == y))
-                    {
-                        GetCell(i, j).IsOpened = false;
-                    }
-                    else
-                    {
-                        GetCell(i, j).IsOpened = true;
-                    }
-                }
+            TouchAroundSafetyCells(x, y);
 
             GameState = GetCell(x, y).IsBomb ? GameState.GameOver : GameState.Continue;
-
         }
 
         // method
@@ -84,5 +124,8 @@ namespace Minesweeper.Core
     {
         public bool IsOpened { get; set; }
         public bool IsBomb { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public bool IsCheck { get; set; }
     }
 }
