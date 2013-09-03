@@ -84,7 +84,7 @@ namespace Minesweeper.Core
         // method
         public Cell GetCell(int x, int y)
         {
-            return cells[x, y];  // << y = 3 Is error. Why ?
+            return cells[x, y];  
         }
 
         // this is for unittest
@@ -96,8 +96,8 @@ namespace Minesweeper.Core
         public int GetCountOfAroundBombs(int x, int y)
         {
             var countBomb = 0;
-            for (int i = 0; i <= x + 1; i++)
-                for (int j = 0; j <= y + 1; j++)
+            for (int i = x-1; i <= x + 1; ++i)
+                for (int j = y-1; j <= y + 1; ++j)
                 {
                     if (IsValidCell(i,j) && GetCell(i, j).IsBomb && !(i == x && j == y))
                     {
@@ -114,8 +114,9 @@ namespace Minesweeper.Core
     {
         public bool IsOpened { get; set; }
         public bool IsBomb { get; set; }
+        public bool IsFlag { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public bool IsFlag { get; set; }
+        
     }
 }
