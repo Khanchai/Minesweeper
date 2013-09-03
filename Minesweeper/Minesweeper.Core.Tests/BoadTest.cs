@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -115,7 +116,6 @@ namespace Minesweeper.Core.Tests
                         board.SetBomb(i, j);
                 }
             }
-
             Assert.That(board.GetCountOfAroundBombs(1, 2), Is.EqualTo(5));
         }
 
@@ -251,5 +251,14 @@ namespace Minesweeper.Core.Tests
                 }
         }
 
+        [Test]
+        public void SetRandomBomb()
+        {
+            
+            var board = new Board(3, 3);
+            board.SetBombs(5);
+
+            Assert.That(5, Is.EqualTo(board.GetBombsCount()));
+        }
     }
 }

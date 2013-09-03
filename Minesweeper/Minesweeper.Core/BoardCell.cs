@@ -27,8 +27,8 @@ namespace Minesweeper.Core
             GameState = GameState.Continue;
 
             cells = new Cell[width, height];
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
+            for (var i = 0; i < width; i++)
+                for (var j = 0; j < height; j++)
                 {
                     cells[i, j] = new Cell() { X = i, Y = j };
                 }
@@ -52,9 +52,9 @@ namespace Minesweeper.Core
         public Cell[] GetAroundCells(int x, int y)
         {
             var listCell = new List<Cell>();
-            for (int i = x - 1; i < x + 2; i++)
+            for (var i = x - 1; i < x + 2; i++)
             {
-                for (int j = y - 1; j < y + 2; j++)
+                for (var j = y - 1; j < y + 2; j++)
                 {
                     if (i != x || j != y)
                     {
@@ -76,15 +76,15 @@ namespace Minesweeper.Core
         // method
         public void Touch(int x, int y)
         {
-          TouchAroundSafetyCells(x, y);
+            TouchAroundSafetyCells(x, y);
 
-          GameState = GetCell(x, y).IsBomb ? GameState.GameOver : GameState.Continue;
+            GameState = GetCell(x, y).IsBomb ? GameState.GameOver : GameState.Continue;
         }
 
         // method
         public Cell GetCell(int x, int y)
         {
-            return cells[x, y];  
+            return cells[x, y];
         }
 
         // this is for unittest
@@ -93,13 +93,45 @@ namespace Minesweeper.Core
             GetCell(x, y).IsBomb = true;
         }
 
+        public int GetBombsCount()
+        {
+            var count = 0;
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    if (cells[i, j].IsBomb) count++;
+                }
+                
+            }
+            return count;
+        }
+
+        public void SetBombs(int numBomb)
+        {
+            var random = new Random();
+            var bombCount = 0;
+            while (bombCount < numBomb)
+            {
+                var x = random.Next(0, Width);
+                var y = random.Next(0, Height);
+                if (!GetCell(x, y).IsBomb)
+                {
+                    SetBomb(x,y);
+                    bombCount++;
+                }
+            }
+        }
+
+
+
         public int GetCountOfAroundBombs(int x, int y)
         {
             var countBomb = 0;
-            for (int i = x-1; i <= x + 1; ++i)
-                for (int j = y-1; j <= y + 1; ++j)
+            for (var i = x - 1; i < x + 2; ++i)
+                for (var j = y - 1; j < y + 2; ++j)
                 {
-                    if (IsValidCell(i,j) && GetCell(i, j).IsBomb && !(i == x && j == y))
+                    if (IsValidCell(i, j) && GetCell(i, j).IsBomb && !(i == x && j == y))
                     {
                         countBomb++;
                     }
@@ -117,6 +149,6 @@ namespace Minesweeper.Core
         public bool IsFlag { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        
+
     }
 }
