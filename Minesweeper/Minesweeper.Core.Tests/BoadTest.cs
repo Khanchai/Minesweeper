@@ -11,6 +11,15 @@ namespace Minesweeper.Core.Tests
     public class BoadTest
     {
         [Test]
+        public void TestTouchCellOfBoard0()
+        {
+            var board = new Board(3, 3);
+            board.Touch(0, 0);
+
+            Assert.That(board.GetCell(0, 0).IsOpened, Is.True);
+        }
+
+        [Test]
         public void TestTouchCellOfBoard()
         {
             var board = new Board(10, 10);

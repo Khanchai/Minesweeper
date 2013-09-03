@@ -36,27 +36,17 @@ namespace Minesweeper.Core
 
         public void TouchAroundSafetyCells(int x, int y)
         {
-            GetCell(x, y).IsOpened = true;
-            GetCell(x, y).IsCheck = true;
-
-            var getAroundCells = GetAroundCells(x, y);
-
-            foreach (var aroundCell in getAroundCells)
+            if (GetCountOfAroundBombs(x, y) == 0)
             {
-                if (!aroundCell.IsBomb)
+                foreach (var aroundCell in GetAroundCells(x, y))
                 {
-                    aroundCell.IsOpened = true;
-                }
-                
-                if (GetCountOfAroundBombs(aroundCell.X, aroundCell.Y) == 0)
-                {
-                    if (!aroundCell.IsCheck)
+                    if ((!GetCell(aroundCell.X, aroundCell.Y).IsOpened) && (IsValidCell(aroundCell.X, aroundCell.Y)))
                     {
+                        GetCell(aroundCell.X, aroundCell.Y).IsOpened = true;
                         TouchAroundSafetyCells(aroundCell.X, aroundCell.Y);
                     }
                 }
             }
-            
         }
 
         public Cell[] GetAroundCells(int x, int y)
@@ -68,7 +58,7 @@ namespace Minesweeper.Core
                 {
                     if (i != x || j != y)
                     {
-                        if (IsValidCell(i,j))
+                        if (IsValidCell(i, j))
                         {
                             listCell.Add(GetCell(i, j));
                         }
@@ -86,15 +76,15 @@ namespace Minesweeper.Core
         // method
         public void Touch(int x, int y)
         {
-            TouchAroundSafetyCells(x, y);
+          TouchAroundSafetyCells(x, y);
 
-            GameState = GetCell(x, y).IsBomb ? GameState.GameOver : GameState.Continue;
+          GameState = GetCell(x, y).IsBomb ? GameState.GameOver : GameState.Continue;
         }
 
         // method
         public Cell GetCell(int x, int y)
         {
-            return cells[x, y];
+            return cells[x, y];  // << y = 3 Is error. Why ?
         }
 
         // this is for unittest
@@ -109,7 +99,7 @@ namespace Minesweeper.Core
             for (int i = 0; i <= x + 1; i++)
                 for (int j = 0; j <= y + 1; j++)
                 {
-                    if (GetCell(i, j).IsBomb && !(i == x && j == y))
+                    if (IsValidCell(i,j) && GetCell(i, j).IsBomb && !(i == x && j == y))
                     {
                         countBomb++;
                     }
@@ -118,7 +108,7 @@ namespace Minesweeper.Core
         }
     }
 
-    public enum GameState { GameOver, Continue }
+    public enum GameState { GameOver, Continue, GameClear }
 
     public class Cell
     {
@@ -126,6 +116,6 @@ namespace Minesweeper.Core
         public bool IsBomb { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public bool IsCheck { get; set; }
+        public bool IsFlag { get; set; }
     }
 }
