@@ -44,11 +44,11 @@ namespace Minesweeper.Gui
                     else
                     {
                         if(board.GetCell(x,y).IsFlag)
-                            TextRenderer.DrawText(graphics, "旗", font, cellRect, Color.Red);
+                            TextRenderer.DrawText(graphics, "Flag", font, cellRect, Color.Red);
                     }
                 }
 
-            if (board.GameState == GameState.GameOver)
+            if (board.State == GameState.GameOver)
             {
                 var scene = new Rectangle(BoardMetrics.Offset, BoardMetrics.Offset, BoardMetrics.CellWidth * board.Width, BoardMetrics.CellHeight * board.Height);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Red)), scene);
@@ -56,7 +56,7 @@ namespace Minesweeper.Gui
                 TextRenderer.DrawText(graphics, "Game Over!", font, scene, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }
 
-            if (board.GameState == GameState.GameClear)
+            if (board.State == GameState.GameClear)
             {
                 var scene = new Rectangle(BoardMetrics.Offset, BoardMetrics.Offset, BoardMetrics.CellWidth * board.Width, BoardMetrics.CellHeight * board.Height);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Blue)), scene);

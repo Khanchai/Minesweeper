@@ -19,14 +19,13 @@ namespace Minesweeper.Gui
         {
             InitializeComponent();
             DoubleBuffered = true;
-            board.SetBombs(10);
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (board.GameState == GameState.GameOver || board.GameState == GameState.GameClear)
+            if (board.State == GameState.GameOver || board.State == GameState.GameClear)
             {
-//                board.
+                board.Continue();
             }
             else
             {
@@ -40,7 +39,7 @@ namespace Minesweeper.Gui
                 }
                 else if(e.Button == System.Windows.Forms.MouseButtons.Right)
                 {
-//                    board.Flag(hit.Item1, hit.Item2);
+                    board.Flag(hit.Item1, hit.Item2);
                 }
             }
             Refresh();

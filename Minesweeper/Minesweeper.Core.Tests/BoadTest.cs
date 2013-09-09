@@ -126,7 +126,7 @@ namespace Minesweeper.Core.Tests
             board.SetBomb(0, 0);
 
             board.Touch(0, 0);
-            Assert.That(board.GameState, Is.EqualTo(GameState.GameOver));
+            Assert.That(board.State, Is.EqualTo(GameState.GameOver));
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Minesweeper.Core.Tests
             board.SetBomb(1, 1);
 
             board.Touch(1, 1);
-            Assert.That(board.GameState, Is.EqualTo(GameState.GameOver));
+            Assert.That(board.State, Is.EqualTo(GameState.GameOver));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Minesweeper.Core.Tests
             board.SetBomb(1, 1);
 
             board.Touch(1, 2);
-            Assert.That(board.GameState, Is.Not.EqualTo(GameState.GameOver));
+            Assert.That(board.State, Is.Not.EqualTo(GameState.GameOver));
         }
 
         [Test]
