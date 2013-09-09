@@ -252,13 +252,21 @@ namespace Minesweeper.Core.Tests
         }
 
         [Test]
-        public void SetRandomBomb()
+        public void SetRandomBomb1()
         {
-            
             var board = new Board(3, 3);
             board.SetBombs(5);
 
             Assert.That(5, Is.EqualTo(board.GetBombsCount()));
+        }
+
+        [Test]
+        public void SetRandomBomb2()
+        {
+            var board = new Board(5, 5);
+            board.SetBombs(10);
+
+            Assert.That(10, Is.EqualTo(board.GetBombsCount()));
         }
     }
 }

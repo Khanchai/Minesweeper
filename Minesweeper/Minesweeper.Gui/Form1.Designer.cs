@@ -1,4 +1,6 @@
-﻿namespace Minesweeper.Gui
+﻿using System;
+
+namespace Minesweeper.Gui
 {
     partial class MineSweeper
     {
@@ -28,9 +30,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MineSweeper
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "MineSweeper";
             this.Text = "Form1";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
