@@ -53,7 +53,7 @@ namespace Minesweeper.Gui
                 var scene = new Rectangle(BoardMetrics.Offset, BoardMetrics.Offset, BoardMetrics.CellWidth * board.Width, BoardMetrics.CellHeight * board.Height);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Red)), scene);
                 var font = new Font(FontFamily.GenericSerif, 30f);
-                TextRenderer.DrawText(graphics, "Game Over!", font, scene, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                TextRenderer.DrawText(graphics, "Game Over !!", font, scene, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }
 
             if (board.State == GameState.GameClear)
@@ -61,7 +61,7 @@ namespace Minesweeper.Gui
                 var scene = new Rectangle(BoardMetrics.Offset, BoardMetrics.Offset, BoardMetrics.CellWidth * board.Width, BoardMetrics.CellHeight * board.Height);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Blue)), scene);
                 var font = new Font(FontFamily.GenericSerif, 30f);
-                TextRenderer.DrawText(graphics, "Clear!", font, scene, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                TextRenderer.DrawText(graphics, "Congratulation !!", font, scene, Color.Black, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }
         }
     }
